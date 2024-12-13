@@ -1,9 +1,6 @@
 
 import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid"; 
-import TaskList from "./TaskList";
-
-
+import { v4 as uuidv4 } from "uuid"; // UUID გენერატორი
 
 class ToDoApp extends Component {
   state = {
@@ -11,7 +8,6 @@ class ToDoApp extends Component {
     tasks: {
       todo: [],
       done: [],
-
     },
   };
 
@@ -81,20 +77,29 @@ class ToDoApp extends Component {
           <button onClick={this.addTask}>Add</button>
         </div>
         <div className="columns">
-          <TaskList
-            title="To Do"
-            tasks={tasks.todo}
-            onPrimaryAction={this.markAsDone}
-            primaryActionLabel="Done"
-          />
-          <TaskList
-            title="Done"
-            tasks={tasks.done}
-            onPrimaryAction={this.moveToToDo}
-            primaryActionLabel="Move Back"
-            onSecondaryAction={this.deleteTask}
-            secondaryActionLabel="Delete"
-          />
+          <div className="column">
+            <h2>To Do</h2>
+            <ul>
+              {tasks.todo.map((task) => (
+                <li key={task.id}>
+                  {task.text}
+                  <button onClick={() => this.markAsDone(task.id)}>Done</button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="column">
+            <h2>Done</h2>
+            <ul>
+              {tasks.done.map((task) => (
+                <li key={task.id}>
+                  {task.text}
+                  <button onClick={() => this.moveToToDo(task.id)}>Move Back</button>
+                  <button onClick={() => this.deleteTask(task.id)}>Delete</button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     );
